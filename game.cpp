@@ -1,6 +1,6 @@
+#define SDL_MAIN_HANDLED
 #include "SDL2/SDL_rect.h"
 #include "SDL2/SDL_render.h"
-#define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 #include <random>
 #include <iostream>
@@ -21,6 +21,7 @@ void renderInside(SDL_Renderer* renderer, SDL_Point points[4], float scale, SDL_
     std::random_device rd;
     std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(1, 3);
+    std::uniform_int_distribution<> clrnd(0, 255);
     SDL_Point initial = points[1];
 
     // Scale the number of points generated based on the zoom level
@@ -33,26 +34,14 @@ void renderInside(SDL_Renderer* renderer, SDL_Point points[4], float scale, SDL_
 
     // Generate fractal points and only render those that are within the viewport
     for (int i = 0; i < numPoints; i++) {
-        int randomnum = dis(gen);
-        SDL_Point corner = points[randomnum];
+        SDL_Point corner = points[dis(gen)];
         initial = getDistance(initial, corner);
 
         // Check if the point is within the visible viewport
         if (initial.x >= viewport.x && initial.x <= viewport.x + viewport.w &&
             initial.y >= viewport.y && initial.y <= viewport.y + viewport.h) {
-            
-            if(randomnum == 1)
-            {
-              SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // White color
-            }else if (randomnum == 2) {
-              SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // White color
-            }else if (randomnum == 3) {
-              SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // White color
-            }
 
-
-
-
+            SDL_SetRenderDrawColor(renderer, clrnd(gen), clrnd(gen), clrnd(gen), 255); // random color
             SDL_RenderDrawPoint(renderer, initial.x, initial.y);
         }
     }
