@@ -1,6 +1,6 @@
 [
  {
-  "directory": "C:\\Users\\1\\Desktop\\20-11\\sdl2test",
+  "directory": "C:\\Users\\1\\Desktop\\20-11\\serpinski",
   "arguments": [
    "g++",
    "-Isrc/include",
