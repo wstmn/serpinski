@@ -33,13 +33,26 @@ void renderInside(SDL_Renderer* renderer, SDL_Point points[4], float scale, SDL_
 
     // Generate fractal points and only render those that are within the viewport
     for (int i = 0; i < numPoints; i++) {
-        SDL_Point corner = points[dis(gen)];
+        int randomnum = dis(gen);
+        SDL_Point corner = points[randomnum];
         initial = getDistance(initial, corner);
 
         // Check if the point is within the visible viewport
         if (initial.x >= viewport.x && initial.x <= viewport.x + viewport.w &&
             initial.y >= viewport.y && initial.y <= viewport.y + viewport.h) {
-            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255); // White color
+            
+            if(randomnum == 1)
+            {
+              SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // White color
+            }else if (randomnum == 2) {
+              SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255); // White color
+            }else if (randomnum == 3) {
+              SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // White color
+            }
+
+
+
+
             SDL_RenderDrawPoint(renderer, initial.x, initial.y);
         }
     }
